@@ -1,0 +1,53 @@
+<html>
+<head>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+	</head>
+<body>
+
+<h1>Restaurants</h1>
+<br>
+<div class="row">
+	<div class="col-md-6 text-right">
+			{%if 'username' not in session %}
+			<a href="{{url_for('showLogin')}}">Click Here to Login </a>
+			{% else %}
+			<a href="{{url_for('gdisconnect')}}">Logout </a>
+			{% endif %}
+	</div>
+</div>
+<a href = '{{url_for('newRestaurant')}}'><u>Create New Restaurant</u></a>
+<br><br>
+
+<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+<div class = 'pane'>
+{% for restaurant in restaurants %}
+
+<div>
+
+<a href = "{{url_for('showMenu', restaurant_id = restaurant.id)}}"> <h3><big>{{restaurant.name}}</big></h3></a>
+
+<p><a href = "{{url_for('editRestaurant',restaurant_id = restaurant.id)}}">Edit </a>
+|
+<a href = "{{url_for('deleteRestaurant',restaurant_id = restaurant.id)}}">Delete </a> </p>
+<hr>
+</div>
+
+
+{% endfor %}
+</div>
+</body>
+
+</html>
